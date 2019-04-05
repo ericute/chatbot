@@ -15,9 +15,8 @@ function synchronize() {
     }   
 
     var request = new XMLHttpRequest();    
-    var parameters = {
-        "kbId": "{MY_KB_ID}",
-                "body": jsonData
+    var parameters = {        
+        "body": jsonData
     }
     request.open("POST", "https://qnawcfaq.azurewebsites.net/qnamaker/knowledgebases/{kbId}}/generateAnswer", true);                    
     request.setRequestHeader("Authorization", "EndpointKey {key}}");
