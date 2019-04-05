@@ -1,31 +1,34 @@
 function synchronize() {
-
     var jsonData = {
-        "add": {
-            "qnaList":[
-                {"source": "Custom"},
-                {"answer": "Hello"},
-                {"questions": ["Hi", "Hello"]}
+        qnaList: [
+          {
+            id: 0,
+            answer: 'Hello',
+            source: 'Custom Editorial',
+            questions: [
+              'Hi','Hello'
             ],
-        },
-        "delete": {
-            "sources": ["Custom"]
-        },
-        "update": {}
-    }   
-
-    var request = new XMLHttpRequest();    
-    var parameters = {        
-        "body": jsonData
+            metadata: [
+              {
+                name: 'category',
+                value: 'api'
+              }
+            ]
+          }
+        ]
     }
-    request.open("POST", "https://qnawcfaq.azurewebsites.net/qnamaker/knowledgebases/{kbId}}/generateAnswer", true);                    
-    request.setRequestHeader("Authorization", "EndpointKey {key}}");
+      
+    var request = new XMLHttpRequest();    
+
+    request.open("PATCH", "https://westus.api.cognitive.microsoft.com/qnamaker/v4.0/knowledgebases/{kbId}", true);                    
+    request.setRequestHeader("Ocp-Apim-Subscription-Key", "{key}");
     request.setRequestHeader("Content-type", "application/json");                    
-    request.onreadystatechange = function () { //Call a function when the state changes.
-        if (request.readyState == 4 && request.status == 200) {
+    request.onreadystatechange = function () { 
+        //Call a function when the state changes.
+        if (request.readyState == 4) {
             alert(request.responseText);
         }
     }
 
-    request.send(JSON.stringify(parameters));
+    request.send(JSON.stringify(jsonData));
 }
